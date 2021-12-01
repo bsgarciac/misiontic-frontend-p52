@@ -34,6 +34,7 @@ export default {
         background-color: #0d0d73;
         color: white;
         padding: 10px 50px;
+        height: 54px
   }
   body{
     margin: 0;
