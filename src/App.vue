@@ -7,8 +7,24 @@
         <button>Registro</button>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
+
+<script>
+export default {
+    name: "App", // Nombre del componente
+    data: function() {}, // Todas las variables de este componentes
+    methods: {
+      loadLogIn(){
+        this.$router.push({name: "logIn"});
+      }
+    }, // Todas las funciones que usa este componente
+    created: function () {
+      this.loadLogIn();
+    } // Eventos: lo que pasa cuando el componente se inicia
+};
+</script>
 
 <style>
   .header{
