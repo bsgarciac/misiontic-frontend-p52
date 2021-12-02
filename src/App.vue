@@ -2,10 +2,13 @@
   <div id="app">
     <div class="header shadow">
       <h2>Banco Misión TIC</h2>
-      <div>
+      <div class="buttons">
         <button>Ingresar</button>
         <button>Registro</button>
       </div>
+      <div class="menu">
+        <img src="./assets/menu.png">
+      </div> 
     </div>
     <router-view></router-view>
   </div>
@@ -47,5 +50,22 @@ export default {
     border: none;
     background-color: transparent;
     color: white;
+  }
+  .menu{
+    display: none;
+  }
+  .menu img{
+        width: 25px;
+  }
+  @media(max-width: 500px){
+    .buttons{
+      display: none;
+    }
+    .menu {
+      display: block;
+    }
+    .header{
+      padding: 10px 20px;
+    }
   }
 </style>

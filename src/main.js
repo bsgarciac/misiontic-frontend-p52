@@ -6,7 +6,7 @@ import { createApolloProvider } from '@vue/apollo-option'
 import { setContext } from 'apollo-link-context'
 
 const httpLink = createHttpLink({
-    uri: 'https://misiontic-apigatewat-p14.herokuapp.com/',
+    uri: 'https://apigateway-misionticp52.herokuapp.com/',
 })
 
 const authLink = setContext((_, { headers }) => {

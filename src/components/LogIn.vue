@@ -4,9 +4,9 @@
 
         <div class="form shadow-lg ">
             <h3>Iniciar Sesión</h3>
-            <form>
-                <input class="form-control" placeholder="Usuario"/>
-                <input class="form-control" type="password" placeholder="Contraseña"/> 
+            <form v-on:submit.prevent="processLogIn">
+                <input v-model="credentials.username" class="form-control" placeholder="Usuario"/>
+                <input v-model="credentials.password" class="form-control" type="password" placeholder="Contraseña"/> 
                 <button class="btn btn-primary">Ingresar</button>
             </form>
         </div>
@@ -15,11 +15,43 @@
 
 
 <script>
+import gql from "graphql-tag";
+
 export default {
-    name: "LogIn", // Nombre del componente
-    data: function() {}, // Todas las variables de este componentes
-    methods: {}, // Todas las funciones que usa este componente
-    created: function () {} // Eventos: lo que pasa cuando el componente se inicia
+    name: "LogIn", 
+    data: function() {
+        return {
+            credentials: {
+                username: "",
+                password: ""
+            }
+        }
+    }, 
+    methods: {
+        processLogIn: async function (){
+            await this.$apollo.mutate({
+                mutation: gql`
+                    mutation Login($credentials: LoginInput!) {
+                        login(credentials: $credentials) {
+                            key
+                        }
+                    }
+                `,
+                variables: {
+                    credentials: this.credentials
+                }
+            })
+            .then((result) => {
+                console.log("FUNCIONÓOOO")
+                console.log(result)
+            })
+            .catch((error)=>{
+                console.log("DIO ERROR :c")
+                console.log(error)
+            })
+        }
+    }, 
+    created: function () {}
 };
 </script>
 
@@ -46,7 +78,14 @@ export default {
         margin-bottom: 25px;
     }
     .form h3{
-            text-align: center;
-    margin-bottom: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    @media(max-width: 500px){
+        .form {
+             padding: 40px 25px;
+            width: 85%;
+        }
     }
 </style>
