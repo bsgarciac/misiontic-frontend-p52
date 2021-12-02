@@ -6,8 +6,12 @@
             <h3>Iniciar Sesión</h3>
             <form v-on:submit.prevent="processLogIn">
                 <input v-model="credentials.username" class="form-control" placeholder="Usuario"/>
-                <input v-model="credentials.password" class="form-control" type="password" placeholder="Contraseña"/> 
-                <button class="btn btn-primary">Ingresar</button>
+                <input v-model="credentials.password" class="form-control" type="password" placeholder="Contraseña"/>
+                <p v-if="show_error" class="error">Usuario o contraseña incorrectos</p> 
+                <button v-bind:class="{'disabled': is_loading}" class="btn btn-primary">
+                    <span v-if="!is_loading">Ingresar</span>
+                    <div v-if="is_loading" class="spinner-border text-light" role="status"></div>
+                </button>
             </form>
         </div>
     </div>
@@ -21,6 +25,8 @@ export default {
     name: "LogIn", 
     data: function() {
         return {
+            show_error: false,
+            is_loading: false,
             credentials: {
                 username: "",
                 password: ""
@@ -29,6 +35,7 @@ export default {
     }, 
     methods: {
         processLogIn: async function (){
+            this.is_loading = true;
             await this.$apollo.mutate({
                 mutation: gql`
                     mutation Login($credentials: LoginInput!) {
@@ -43,11 +50,19 @@ export default {
             })
             .then((result) => {
                 console.log("FUNCIONÓOOO")
-                console.log(result)
+                this.is_loading = false;
+                this.show_error = false;
+                let data = {
+                    username: this.credentials.username,
+                    token: result.data.login.key
+                }
+                this.$emit("completedLogin", data);
             })
             .catch((error)=>{
+                this.show_error = true;
                 console.log("DIO ERROR :c")
                 console.log(error)
+                this.is_loading = false;
             })
         }
     }, 
@@ -80,6 +95,16 @@ export default {
     .form h3{
         text-align: center;
         margin-bottom: 30px;
+    }
+
+    .error{
+        color: red;
+        font-size: 15px;
+    }
+
+    .disabled{
+        pointer-events: none;
+        opacity: 0.6;
     }
 
     @media(max-width: 500px){
