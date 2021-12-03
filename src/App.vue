@@ -27,7 +27,7 @@ export default {
       verifyAuth(){
         this.is_auth = localStorage.getItem("is_auth") || false;
         if(this.is_auth){
-          console.log("ir la página de inicio")
+          this.loadTransactions();
         }else{
           this.loadLogIn();
         }
@@ -38,15 +38,20 @@ export default {
       loadSignUp(){
         this.$router.push({name: "signUp"});
       },
+      loadTransactions(){
+        this.$router.push({name: "transactions"});
+      },
       completedLogin(data){
         this.is_auth = true;
         localStorage.setItem("is_auth", true);
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
+        this.verifyAuth()
       },
       logout(){
         this.is_auth = false;
         localStorage.clear();
+        this.verifyAuth()
       }
     }, // Todas las funciones que usa este componente
     created: function () {

@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="background"></div>
-
         <div class="form shadow-lg ">
             <h3>Registro</h3>
             <form v-on:submit.prevent="processSignUp">
