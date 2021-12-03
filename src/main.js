@@ -13,7 +13,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            "Authorization": localStorage.getItem("token_access") || ""
+            "Authorization": localStorage.getItem("token") || ""
         }
     }
 })
@@ -28,3 +28,4 @@ const apolloProvider = new createApolloProvider({
 })
 
 createApp(App).use(router).use(apolloProvider).mount('#app')
+
