@@ -13,17 +13,20 @@ const routes = [
   {
     path: '/user/login',
     name: 'logIn',
-    component: LogIn
+    component: LogIn,
+    meta: { requiresAuth: false }
   },
   {
     path: '/user/signup',
     name: 'signUp',
-    component: SignUp
+    component: SignUp,
+    meta: { requiresAuth: false }
   },
   {
     path: '/user/transactions',
     name: 'transactions',
-    component: Transactions
+    component: Transactions,
+    meta: { requiresAuth: true }
   }
 ]
 

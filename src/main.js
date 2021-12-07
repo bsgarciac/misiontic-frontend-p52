@@ -27,5 +27,21 @@ const apolloProvider = new createApolloProvider({
     defaultClient: apolloClient
 })
 
+async function isAuth(){
+    if(localStorage.getItem("token") === null){
+        return false;
+    }
+    return true;
+}
+
+router.beforeEach(async (to, from)=>{
+    var is_auth = await isAuth()
+    if(!is_auth && to.meta.requiresAuth){
+        return false;
+    }else{
+        return true;
+    }
+})
+
 createApp(App).use(router).use(apolloProvider).mount('#app')
 
