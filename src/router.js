@@ -14,19 +14,19 @@ const routes = [
     path: '/user/login',
     name: 'logIn',
     component: LogIn,
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: false, reverseAuth: true }
   },
   {
     path: '/user/signup',
     name: 'signUp',
     component: SignUp,
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: false, reverseAuth: true }
   },
   {
     path: '/user/transactions',
     name: 'transactions',
     component: Transactions,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, reverseAuth: false }
   }
 ]
 
